@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS ijik_db
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE ijik_db;
+
+CREATE TABLE IF NOT EXISTS experience_cards (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  title      VARCHAR(100)  NOT NULL,
+  content    TEXT          NOT NULL,
+  tags       VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at DATETIME DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS job_postings (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  company    VARCHAR(100)  NOT NULL,
+  title      VARCHAR(200)  NOT NULL,
+  url        VARCHAR(500),
+  status     ENUM('open', 'applied', 'closed') DEFAULT 'open',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
