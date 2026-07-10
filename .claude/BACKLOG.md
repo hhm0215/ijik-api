@@ -6,7 +6,6 @@
 
 ## P1
 
-- **로컬 .env Docker 모드 전환 테스트** — DB_HOST=db로 바꾸고 docker compose up -d 전체 흐름 로컬 검증
 - **입력값 검증 강화** — PUT 요청 시 빈 body 처리, status ENUM 외 값 방어
 - **페이지네이션** — GET /cards, GET /postings 목록에 limit/offset 쿼리 파라미터 추가
 

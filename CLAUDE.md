@@ -56,3 +56,10 @@ Linux 배포 시 `/etc/nginx/sites-available/`에 복사.
 - `.claude/BACKLOG.md` — 다음 작업
 - `.claude/PROGRESS.md` — 완료 이력 + git 상태
 - `.claude/RETROSPECTIVE.md` — 회고
+
+## 주의사항
+
+- **시각/타임존 검증은 UTC 환경(Docker) 기준으로 한다.** 로컬 개발 환경은 시스템
+  타임존이 KST라 타임존 버그가 우연히 가려진다. DB·앱 모두 UTC(`pool.js` `timezone: 'Z'`)로
+  통일하고, KST 표시는 클라이언트에서 변환한다. (2026-07-10 9시간 오차 사고, RETROSPECTIVE 참조)
+- `.env`는 Docker 모드(`DB_HOST=db`)와 로컬 모드(`DB_HOST=localhost`)가 다르다. 실행 방식에 맞게 설정.

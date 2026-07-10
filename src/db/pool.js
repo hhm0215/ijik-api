@@ -8,7 +8,9 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   connectionLimit: Number(process.env.DB_CONNECTION_LIMIT) || 10,
   waitForConnections: true,
-  timezone: '+09:00',
+  // DB와 앱을 모두 UTC 기준으로 통일한다. 저장은 UTC로, 표시 시점에만 KST 변환.
+  // ('+09:00'으로 두면 UTC로 동작하는 DB 서버와 어긋나 9시간 오차가 생긴다)
+  timezone: 'Z',
 });
 
 // 서버 시작 시 DB 연결 가능 여부를 즉시 검증한다.

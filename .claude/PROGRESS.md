@@ -3,7 +3,7 @@
 ## 현재 git 상태
 
 - 브랜치: main
-- 최신 커밋: be2ddae — feat: add Docker support
+- 최신 커밋: (아래 timezone 수정 커밋 후 갱신)
 - 원격: origin/main 동기화 완료
 - GitHub: https://github.com/hhm0215/ijik-api
 
@@ -20,6 +20,8 @@
 - 2026-07-08 | README.md (아키텍처 다이어그램, API 명세, 배포 가이드)
 - 2026-07-08 | Docker 지원 (Dockerfile, docker-compose.yml, .dockerignore)
 - 2026-07-08 | GitHub 공개 저장소 생성 및 푸시
+- 2026-07-10 | Docker Compose 로컬 배포 검증 (app + MySQL 8.0, schema 자동적용, CRUD 전체 통과)
+- 2026-07-10 | 타임존 9시간 오차 버그 수정 (pool.js timezone '+09:00' → 'Z' UTC 통일). Docker MySQL(UTC)과 어긋나던 문제. 재검증 완료 (created_at = 서버 UTC 일치)
 
 ## 다음 세션 진입점
 
