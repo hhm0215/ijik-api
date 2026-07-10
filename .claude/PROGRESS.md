@@ -3,7 +3,7 @@
 ## 현재 git 상태
 
 - 브랜치: main
-- 최신 커밋: (아래 timezone 수정 커밋 후 갱신)
+- 최신 커밋: 1a95778 — fix: unify timezone to UTC
 - 원격: origin/main 동기화 완료
 - GitHub: https://github.com/hhm0215/ijik-api
 
