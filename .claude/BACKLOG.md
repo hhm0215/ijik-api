@@ -3,7 +3,7 @@
 ## P0
 
 - **배포 마무리 (서버에서 사용자 직접 실행)** — docs/DEPLOY.md 5~9단계: DNS A레코드 → Nginx 블록 → 방화벽 80/443 → Certbot HTTPS → 최종 확인. 앱 컨테이너는 이미 기동 중
-- **검증 계층 커밋·푸시 후 서버 반영** — 로컬 미커밋 상태(validators/, utils/). 푸시 후 서버에서 git pull + docker compose up -d --build
+- **검증 계층 서버 반영** — ab6e434 푸시 완료. 서버에서 git pull + docker compose up -d --build
 
 ## P1
 
@@ -23,6 +23,6 @@
 
 ## 완료되어 제거된 항목
 
-- ~~입력값 검증 강화~~ — 2026-07-10 완료 (validators 계층 + AppError, 13개 케이스 실환경 검증). 코드는 커밋 대기 중
+- ~~입력값 검증 강화~~ — 2026-07-10 완료 (validators 계층 + AppError, 13개 케이스 실환경 검증, 커밋 ab6e434)
 - ~~응답 통일 (PUT 성공 시 리소스 반환)~~ — 이미 구현되어 있었음 (cards.controller.js, postings.controller.js)
 - ~~로컬 .env Docker 모드 전환 테스트~~ — 2026-07-10 완료

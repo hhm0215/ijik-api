@@ -3,10 +3,11 @@
 ## 현재 git 상태
 
 - 브랜치: main
-- 최신 커밋: 9cf06ed — docs: finalize deploy guide (subdomain + HTTPS) and project roadmap
+- 최신 커밋: ab6e434 — feat: add input validation layer (validators + AppError)
 - 원격: origin/main 동기화 완료
 - GitHub: https://github.com/hhm0215/ijik-api
-- 미커밋 변경: 입력값 검증 계층 (validators/, utils/, 컨트롤러·서비스·리포지토리 수정) + 하니스 문서 갱신 — 커밋 필요
+- 미커밋 변경: 없음
+- ⚠️ 서버 컨테이너는 검증 계층 이전 코드로 기동 중 — 서버에서 git pull + docker compose up -d --build 필요
 
 ## 완료된 작업
 
@@ -24,7 +25,7 @@
 - 2026-07-10 | Docker Compose 로컬 배포 검증 (app + MySQL 8.0, schema 자동적용, CRUD 전 구간, 한글/이모지 utf8mb4 왕복, soft delete 확인)
 - 2026-07-10 | 타임존 9시간 오차 버그 수정 — **최종안: pool.js timezone '+09:00' → 'Z' UTC 통일 (커밋 1a95778)**. 다른 세션에서 시도한 compose `--default-time-zone=+09:00`(KST 고정)안은 UTC 통일 결정으로 폐기·되돌림 (2026-07-11). CLAUDE.md 주의사항 참조
 - 2026-07-10 | Nginx 설정 검증 — 일회용 nginx:alpine 컨테이너에 repo의 nginx.conf 적용(nginx -t 통과), :8080 프록시 경유로 health/CRUD/404 패스스루 확인. proxy_pass 대상만 host.docker.internal로 치환해 테스트
-- 2026-07-10 | 입력값 검증 계층 — validators/ 신설(필수 필드·타입·길이·ENUM), AppError + 전역 에러 핸들러 statusCode 매핑, cards PUT 부분 갱신으로 통일(tags 소실 버그 수정), 깨진 JSON→400. Docker 실환경 13개 케이스 검증 통과. **미커밋 — 서버에 아직 반영 안 됨**
+- 2026-07-10 | 입력값 검증 계층 — validators/ 신설(필수 필드·타입·길이·ENUM), AppError + 전역 에러 핸들러 statusCode 매핑, cards PUT 부분 갱신으로 통일(tags 소실 버그 수정), 깨진 JSON→400. Docker 실환경 13개 케이스 검증 통과. 커밋 ab6e434 (2026-07-11 푸시) — **서버 컨테이너에는 아직 미반영**
 - 2026-07-10 | Hostinger 서버(Ubuntu 24.04)에 앱 기동 성공 — Docker 확인, ~/ijik-api clone, .env 설정, docker compose up → Database connected successfully
 - 2026-07-10 | docs/DEPLOY.md 최종본 — 서브도메인 + Certbot HTTPS 절차로 갱신 (DNS A레코드 → Nginx → 방화벽 → Certbot 순서)
 
