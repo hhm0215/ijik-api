@@ -1,4 +1,5 @@
 const cardsService = require('../services/cards.service');
+const { validateCreate, validateUpdate } = require('../validators/cards.validator');
 
 async function getCards(req, res, next) {
   try {
@@ -14,18 +15,13 @@ async function getCard(req, res, next) {
     const card = await cardsService.findById(req.params.id);
     res.json({ success: true, data: card });
   } catch (err) {
-    if (err.message === 'NOT_FOUND') return res.status(404).json({ success: false, error: 'Card not found' });
     next(err);
   }
 }
 
 async function createCard(req, res, next) {
   try {
-    const { title, content, tags } = req.body;
-    if (!title || !content) {
-      return res.status(400).json({ success: false, error: 'title and content are required' });
-    }
-    const card = await cardsService.create({ title, content, tags });
+    const card = await cardsService.create(validateCreate(req.body));
     res.status(201).json({ success: true, data: card });
   } catch (err) {
     next(err);
@@ -34,11 +30,9 @@ async function createCard(req, res, next) {
 
 async function updateCard(req, res, next) {
   try {
-    const { title, content, tags } = req.body;
-    const card = await cardsService.update(req.params.id, { title, content, tags });
+    const card = await cardsService.update(req.params.id, validateUpdate(req.body));
     res.json({ success: true, data: card });
   } catch (err) {
-    if (err.message === 'NOT_FOUND') return res.status(404).json({ success: false, error: 'Card not found' });
     next(err);
   }
 }
@@ -48,7 +42,6 @@ async function deleteCard(req, res, next) {
     await cardsService.softDelete(req.params.id);
     res.json({ success: true, data: null });
   } catch (err) {
-    if (err.message === 'NOT_FOUND') return res.status(404).json({ success: false, error: 'Card not found' });
     next(err);
   }
 }
