@@ -151,3 +151,9 @@ pm2 startup   # 서버 재시작 시 자동 실행 등록
 // 실패
 { "success": false, "error": "메시지" }
 ```
+
+## API Contract & External Beta
+
+- OpenAPI 계약: [`docs/openapi.yaml`](docs/openapi.yaml)
+- 외부 실사용·제한 베타 운영 기준: [`docs/EXTERNAL_BETA.md`](docs/EXTERNAL_BETA.md)
+- 회귀 검증: `npm test`

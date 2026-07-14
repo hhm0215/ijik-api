@@ -3,11 +3,11 @@
 ## 현재 git 상태
 
 - 브랜치: main
-- 최신 커밋: ab6e434 — feat: add input validation layer (validators + AppError)
+- 최신 커밋: `git log -1 --oneline`으로 확인 (문서에 SHA를 고정하지 않음)
 - 원격: origin/main 동기화 완료
 - GitHub: https://github.com/hhm0215/ijik-api
-- 미커밋 변경: 없음
-- ⚠️ 서버 컨테이너는 검증 계층 이전 코드로 기동 중 — 서버에서 git pull + docker compose up -d --build 필요
+- 미커밋 변경: `git status --short`로 확인
+- 서버 컨테이너: 검증 계층·Traefik 라우팅 반영 완료 (2026-07-14 실측)
 
 ## 완료된 작업
 

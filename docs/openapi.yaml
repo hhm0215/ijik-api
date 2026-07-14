@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: ijik API
+  version: 1.0.0
+  description: Experience cards and job-posting management API. Dates are UTC ISO 8601 values.
+servers:
+  - url: https://api.srv1519092.hstgr.cloud/api/v1
+    description: Current external development environment
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: Server is running
+  /cards:
+    get:
+      summary: List active experience cards
+      responses:
+        '200': { $ref: '#/components/responses/CardList' }
+    post:
+      summary: Create an experience card
+      requestBody: { $ref: '#/components/requestBodies/CardCreate' }
+      responses:
+        '201': { $ref: '#/components/responses/Card' }
+        '400': { $ref: '#/components/responses/Error' }
+  /cards/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      summary: Get an experience card
+      responses:
+        '200': { $ref: '#/components/responses/Card' }
+        '404': { $ref: '#/components/responses/Error' }
+    put:
+      summary: Partially update an experience card
+      requestBody: { $ref: '#/components/requestBodies/CardUpdate' }
+      responses:
+        '200': { $ref: '#/components/responses/Card' }
+        '400': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+    delete:
+      summary: Soft-delete an experience card
+      responses:
+        '200': { $ref: '#/components/responses/EmptySuccess' }
+        '404': { $ref: '#/components/responses/Error' }
+  /postings:
+    get:
+      summary: List job postings
+      responses:
+        '200': { $ref: '#/components/responses/PostingList' }
+    post:
+      summary: Create a job posting
+      requestBody: { $ref: '#/components/requestBodies/PostingCreate' }
+      responses:
+        '201': { $ref: '#/components/responses/Posting' }
+        '400': { $ref: '#/components/responses/Error' }
+  /postings/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      summary: Get a job posting
+      responses:
+        '200': { $ref: '#/components/responses/Posting' }
+        '404': { $ref: '#/components/responses/Error' }
+    put:
+      summary: Partially update a job posting
+      requestBody: { $ref: '#/components/requestBodies/PostingUpdate' }
+      responses:
+        '200': { $ref: '#/components/responses/Posting' }
+        '400': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+    delete:
+      summary: Delete a job posting
+      responses:
+        '200': { $ref: '#/components/responses/EmptySuccess' }
+        '404': { $ref: '#/components/responses/Error' }
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer, minimum: 1 }
+  requestBodies:
+    CardCreate:
+      required: true
+      content: { application/json: { schema: { $ref: '#/components/schemas/CardCreate' } } }
+    CardUpdate:
+      required: true
+      content: { application/json: { schema: { $ref: '#/components/schemas/CardUpdate' } } }
+    PostingCreate:
+      required: true
+      content: { application/json: { schema: { $ref: '#/components/schemas/PostingCreate' } } }
+    PostingUpdate:
+      required: true
+      content: { application/json: { schema: { $ref: '#/components/schemas/PostingUpdate' } } }
+  responses:
+    Card: { description: Successful card response, content: { application/json: { schema: { $ref: '#/components/schemas/CardResponse' } } } }
+    CardList: { description: Successful card-list response, content: { application/json: { schema: { $ref: '#/components/schemas/CardListResponse' } } } }
+    Posting: { description: Successful posting response, content: { application/json: { schema: { $ref: '#/components/schemas/PostingResponse' } } } }
+    PostingList: { description: Successful posting-list response, content: { application/json: { schema: { $ref: '#/components/schemas/PostingListResponse' } } } }
+    EmptySuccess: { description: Successful delete response, content: { application/json: { schema: { $ref: '#/components/schemas/EmptySuccess' } } } }
+    Error: { description: Error response, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  schemas:
+    CardCreate:
+      type: object
+      required: [title, content]
+      properties: { title: { type: string, maxLength: 100 }, content: { type: string }, tags: { type: string, nullable: true, maxLength: 255 } }
+    CardUpdate:
+      type: object
+      minProperties: 1
+      properties: { title: { type: string, maxLength: 100 }, content: { type: string }, tags: { type: string, nullable: true, maxLength: 255 } }
+    PostingCreate:
+      type: object
+      required: [company, title]
+      properties: { company: { type: string, maxLength: 100 }, title: { type: string, maxLength: 200 }, url: { type: string, nullable: true, maxLength: 500 }, status: { type: string, enum: [open, applied, closed] } }
+    PostingUpdate:
+      type: object
+      minProperties: 1
+      properties: { company: { type: string, maxLength: 100 }, title: { type: string, maxLength: 200 }, url: { type: string, nullable: true, maxLength: 500 }, status: { type: string, enum: [open, applied, closed] } }
+    Card: { type: object, properties: { id: { type: integer }, title: { type: string }, content: { type: string }, tags: { type: string, nullable: true }, created_at: { type: string, format: date-time }, updated_at: { type: string, format: date-time }, deleted_at: { type: string, nullable: true } } }
+    Posting: { type: object, properties: { id: { type: integer }, company: { type: string }, title: { type: string }, url: { type: string, nullable: true }, status: { type: string, enum: [open, applied, closed] }, created_at: { type: string, format: date-time }, updated_at: { type: string, format: date-time } } }
+    CardResponse: { type: object, required: [success, data], properties: { success: { type: boolean, example: true }, data: { $ref: '#/components/schemas/Card' } } }
+    CardListResponse: { type: object, required: [success, data], properties: { success: { type: boolean, example: true }, data: { type: array, items: { $ref: '#/components/schemas/Card' } } } }
+    PostingResponse: { type: object, required: [success, data], properties: { success: { type: boolean, example: true }, data: { $ref: '#/components/schemas/Posting' } } }
+    PostingListResponse: { type: object, required: [success, data], properties: { success: { type: boolean, example: true }, data: { type: array, items: { $ref: '#/components/schemas/Posting' } } } }
+    EmptySuccess: { type: object, properties: { success: { type: boolean, example: true }, data: { nullable: true, example: null } } }
+    Error: { type: object, properties: { success: { type: boolean, example: false }, error: { type: string } } }
