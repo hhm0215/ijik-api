@@ -41,6 +41,9 @@
 
 - **ijik-api = 채용 대응용 백엔드 포트폴리오.** 배포 완료 + (선택) Swagger까지만 하고 멈춤. 기능 확장 안 함
 - **ijik-os = 주력.** 풀스택(Next.js) 유지, 프론트 분리 마이그레이션 안 함 (성능·비용상 손해로 결론)
+- **저장소 경계:** 두 프로젝트는 연동하지 않는다. ijik-api의 API·MySQL을 ijik-os에
+  붙이거나, ijik-os의 API·SQLite·LLM 파이프라인을 이 저장소로 옮기지 않는다.
+  구조 통합은 사용자가 명시적으로 제품 아키텍처 전환을 결정할 때만 검토한다.
 - 전체 로드맵: ① ijik-api 배포 마무리 → ② ijik-os 1.5 안정화 → ③ ijik-os VPS 배포(실사용) → ④ 피드백 업그레이드 → ⑤ SaaS 전환 (ijik-os PLAN.md §4.1 트리거 따름)
 - 최종 서버 그림: Nginx가 서브도메인으로 분배 — api.도메인(ijik-api) / ijik.도메인(ijik-os) / 기존 OpenClaw
 
