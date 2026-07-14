@@ -8,6 +8,13 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
+    # Traefik이 앞단인 서버용 — PUBLIC_HOST 미설정(로컬 등)이면 라우터가 매칭되지 않아 무해
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ijik-api.entrypoints=websecure"
+      - "traefik.http.routers.ijik-api.rule=Host(`${PUBLIC_HOST:-localhost}`)"
+      - "traefik.http.routers.ijik-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ijik-api.loadbalancer.server.port=3000"
 
   db:
     image: mysql:8.0
