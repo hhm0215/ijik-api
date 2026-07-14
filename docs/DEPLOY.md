@@ -1,8 +1,16 @@
 # 배포 가이드 (Hostinger VPS, Ubuntu 24.04)
 
-Docker Compose로 앱을 띄우고, 서브도메인 + Nginx 리버스 프록시 + Let's Encrypt
-HTTPS로 외부에 공개한다. 기존 서버 설정(다른 앱의 Nginx 블록)은 건드리지 않고
-**추가만** 한다.
+Docker Compose로 앱을 띄우고, 서브도메인 + 리버스 프록시 + Let's Encrypt
+HTTPS로 외부에 공개한다. 기존 서버 설정은 건드리지 않고 **추가만** 한다.
+
+> **실제 배포 기록 (2026-07-14):** 이 서버는 Traefik이 이미 80/443을 잡고
+> 있어서 (기존 앱 스택의 리버스 프록시) Nginx를 새로 설치하지 않고 **기존
+> Traefik에 라벨로 라우트를 추가**하는 방식을 사용했다. docker-compose.yml의
+> `labels` 블록 + `.env`의 `PUBLIC_HOST`가 그 구현이다. HTTPS도 Traefik
+> 내장 Let's Encrypt 리졸버가 자동 발급했다 (Certbot 불필요).
+>
+> 아래 Nginx 절차는 **Nginx가 앞단인 서버**용 범용 가이드로 유지한다.
+> 교훈: 배포 전 `ss -tlnp`로 80/443을 누가 잡고 있는지부터 실측할 것.
 
 > 아래 placeholder를 실제 값으로 바꿔서 실행한다.
 > - `SUBDOMAIN` = 서브도메인 전체 (예: `api.example.com`)

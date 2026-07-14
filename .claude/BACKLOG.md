@@ -2,8 +2,7 @@
 
 ## P0
 
-- **배포 마무리 (서버에서 사용자 직접 실행)** — docs/DEPLOY.md 5~9단계: DNS A레코드 → Nginx 블록 → 방화벽 80/443 → Certbot HTTPS → 최종 확인. 앱 컨테이너는 이미 기동 중
-- **검증 계층 서버 반영** — ab6e434 푸시 완료. 서버에서 git pull + docker compose up -d --build
+- **서버 Ollama 외부 노출 차단** — `*:11434`가 인터넷에 완전 개방 (외부에서 접근 실측 확인됨). OpenClaw가 Ollama를 어떻게 호출하는지 실측 후(컨테이너→호스트 경로) OLLAMA_HOST=127.0.0.1 바인딩 또는 방화벽으로 차단. 잘못 막으면 OpenClaw 깨짐 — 진단 먼저
 
 ## P1
 
@@ -26,3 +25,5 @@
 - ~~입력값 검증 강화~~ — 2026-07-10 완료 (validators 계층 + AppError, 13개 케이스 실환경 검증, 커밋 ab6e434)
 - ~~응답 통일 (PUT 성공 시 리소스 반환)~~ — 이미 구현되어 있었음 (cards.controller.js, postings.controller.js)
 - ~~로컬 .env Docker 모드 전환 테스트~~ — 2026-07-10 완료
+- ~~배포 마무리~~ — 2026-07-14 완료. Nginx 대신 기존 Traefik에 라벨 방식 (서버 실측 결과 Traefik이 80/443 선점). https://api.srv1519092.hstgr.cloud 가동, Let's Encrypt 자동 발급, HTTP→HTTPS 308, UTC·검증 계층 실환경 확인
+- ~~검증 계층 서버 반영~~ — 2026-07-14 배포 재빌드에 포함되어 완료 (nonsense status → 400 실측)

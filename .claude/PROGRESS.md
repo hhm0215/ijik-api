@@ -28,6 +28,8 @@
 - 2026-07-10 | 입력값 검증 계층 — validators/ 신설(필수 필드·타입·길이·ENUM), AppError + 전역 에러 핸들러 statusCode 매핑, cards PUT 부분 갱신으로 통일(tags 소실 버그 수정), 깨진 JSON→400. Docker 실환경 13개 케이스 검증 통과. 커밋 ab6e434 (2026-07-11 푸시) — **서버 컨테이너에는 아직 미반영**
 - 2026-07-10 | Hostinger 서버(Ubuntu 24.04)에 앱 기동 성공 — Docker 확인, ~/ijik-api clone, .env 설정, docker compose up → Database connected successfully
 - 2026-07-10 | docs/DEPLOY.md 최종본 — 서브도메인 + Certbot HTTPS 절차로 갱신 (DNS A레코드 → Nginx → 방화벽 → Certbot 순서)
+- 2026-07-14 | **배포 완료 — https://api.srv1519092.hstgr.cloud 가동.** 서버 실측(ss -tlnp)으로 Nginx 미설치 + Traefik(OpenClaw 스택)이 80/443 선점 확인 → Nginx 설치 대신 기존 Traefik에 docker-compose 라벨로 라우트 추가 (PUBLIC_HOST 환경변수 주입, 커밋 fc48b42). HTTPS는 Traefik 내장 letsencrypt 리졸버 자동 발급. 최종 검증: 인증서 검증 통과, HTTP→HTTPS 308, POST created_at=UTC 일치, 검증 계층 400 동작, soft delete. 와일드카드 DNS(*.srv...hstgr.cloud) 덕에 A레코드 불필요였음
+- 2026-07-14 | ⚠️ 보안 발견: 호스트 Ollama가 `*:11434`로 인터넷에 개방 (외부 접근 실측됨) → BACKLOG P0
 
 ## 배포 검증에서 재현된 버그 → 2026-07-10 전부 수정 완료 (미커밋)
 
