@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/session-start.sh",
+            "timeout": 20,
+            "statusMessage": "origin/main 대비 최신인지 확인 중"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "ask": [
+      "Bash(npm install:*)",
+      "Bash(docker compose:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(rm -rf .git:*)"
+    ]
+  }
+}

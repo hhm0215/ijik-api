@@ -31,6 +31,7 @@
 - 2026-07-14 | **배포 완료 — https://api.srv1519092.hstgr.cloud 가동.** 서버 실측(ss -tlnp)으로 Nginx 미설치 + Traefik(OpenClaw 스택)이 80/443 선점 확인 → Nginx 설치 대신 기존 Traefik에 docker-compose 라벨로 라우트 추가 (PUBLIC_HOST 환경변수 주입, 커밋 fc48b42). HTTPS는 Traefik 내장 letsencrypt 리졸버 자동 발급. 최종 검증: 인증서 검증 통과, HTTP→HTTPS 308, POST created_at=UTC 일치, 검증 계층 400 동작, soft delete. 와일드카드 DNS(*.srv...hstgr.cloud) 덕에 A레코드 불필요였음
 - 2026-07-14 | ⚠️ 보안 발견: 호스트 Ollama가 `*:11434`로 인터넷에 개방 (외부 접근 실측됨) → BACKLOG P0
 - 2026-07-15 | Swagger UI 완결 — 기존 `docs/openapi.yaml`을 정본으로 `/api-docs`, `/api-docs.json` 제공. 상대 서버 URL로 로컬·배포 Try it out 지원, Docker 이미지에 스펙 포함, OpenAPI 계약 테스트 추가. 테스트 5건·lint·실제 HTTP 200 검증 통과. 서버에는 다음 재배포 시 반영
+- 2026-07-15 | 두 저장소 운영 규칙 정렬 — 비어 있던 SessionStart 훅을 origin/main 최신성 검사로 활성화하고, 현재 Traefik 배포 구조·독립 포트폴리오 기능 동결·로컬 품질 게이트·검증된 작업 단위의 문서/커밋/푸시 규칙을 CLAUDE/README/settings에 반영
 
 ## 배포 검증에서 재현된 버그 → 2026-07-14 수정·배포 완료
 

@@ -17,7 +17,7 @@
 
 ## 참고 — 이 저장소 범위 밖
 
-- ijik-os VPS 배포(로드맵 ③)는 **ijik-os 저장소에서 진행** — 같은 Nginx 패턴, 서브도메인 하나 추가, LLM은 VPS RAM 확인 후 Ollama vs Claude API 결정
+- ijik-os VPS 배포(로드맵 ③)는 **ijik-os 저장소에서 진행** — 기존 Traefik에 독립 서브도메인을 추가하고 VPS LLM은 확정된 Ollama 경로를 사용한다. 두 저장소의 코드·DB·파이프라인은 연결하지 않는다.
 
 ## 완료되어 제거된 항목
 

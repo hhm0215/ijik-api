@@ -11,8 +11,8 @@
 ```
 Client
   │
-  ▼ :80
-Nginx  (reverse proxy)
+  ▼ :443
+Traefik (deployed reverse proxy)
   │
   ▼ :3000
 Express (API server)
@@ -28,8 +28,8 @@ MySQL
 | Runtime | Node.js |
 | Framework | Express |
 | Database | MySQL + mysql2 (connection pool) |
-| Process manager | PM2 |
-| Reverse proxy | Nginx |
+| Runtime deployment | Docker Compose |
+| Reverse proxy | Traefik (현재 VPS), Nginx (대안 설정) |
 
 ## Project Structure
 
@@ -123,7 +123,11 @@ Base URL: `/api/v1`
 }
 ```
 
-## Nginx Setup
+## Alternative Nginx Setup
+
+현재 Hostinger VPS 배포는 기존 Traefik을 사용한다. 아래는 80/443에 다른 프록시가
+없는 별도 Linux 서버에서 Nginx를 선택할 때만 쓰는 대안 절차다. 현재 운영 절차는
+[`docs/DEPLOY.md`](docs/DEPLOY.md)를 따른다.
 
 ### Linux (Ubuntu) 배포
 
@@ -140,7 +144,7 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### PM2로 프로세스 관리
+### PM2로 프로세스 관리 (Docker를 사용하지 않는 경우)
 
 ```bash
 npm install -g pm2
