@@ -1,5 +1,7 @@
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 const router = require('./routes');
+const { openapiDocument } = require('./config/openapi');
 const AppError = require('./utils/AppError');
 
 const app = express();
@@ -7,6 +9,20 @@ const app = express();
 // 요청 바디 파싱
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// OpenAPI 원본과 대화형 문서 — API 라우터/404보다 먼저 등록한다.
+app.get('/api-docs.json', (_req, res) => res.json(openapiDocument));
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(openapiDocument, {
+    customSiteTitle: 'ijik API Docs',
+    swaggerOptions: {
+      displayRequestDuration: true,
+      persistAuthorization: true,
+    },
+  })
+);
 
 // 라우터
 app.use('/api/v1', router);

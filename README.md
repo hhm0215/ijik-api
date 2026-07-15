@@ -75,6 +75,9 @@ npm start      # 프로덕션
 
 Base URL: `/api/v1`
 
+- Interactive documentation: `/api-docs`
+- OpenAPI JSON: `/api-docs.json`
+
 ### Health
 
 | Method | Path | 설명 |

@@ -4,8 +4,8 @@ info:
   version: 1.0.0
   description: Experience cards and job-posting management API. Dates are UTC ISO 8601 values.
 servers:
-  - url: https://api.srv1519092.hstgr.cloud/api/v1
-    description: Current external development environment
+  - url: /api/v1
+    description: Current host
 paths:
   /health:
     get:

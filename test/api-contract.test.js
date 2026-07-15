@@ -5,6 +5,7 @@ const { getHealth } = require('../src/controllers/health.controller');
 const cardsRepository = require('../src/repositories/cards.repository');
 const cardsService = require('../src/services/cards.service');
 const AppError = require('../src/utils/AppError');
+const { openapiDocument } = require('../src/config/openapi');
 const { validateCreate: validateCardCreate, validateUpdate: validateCardUpdate } = require('../src/validators/cards.validator');
 const { validateCreate: validatePostingCreate, validateUpdate: validatePostingUpdate } = require('../src/validators/postings.validator');
 
@@ -62,4 +63,13 @@ test('missing cards are converted to a 404 domain error', async () => {
   } finally {
     cardsRepository.findById = originalFindById;
   }
+});
+
+test('OpenAPI document covers every public resource', () => {
+  assert.equal(openapiDocument.openapi, '3.0.3');
+  assert.equal(openapiDocument.servers[0].url, '/api/v1');
+  assert.ok(openapiDocument.paths['/health'].get);
+  assert.ok(openapiDocument.paths['/cards'].get);
+  assert.ok(openapiDocument.paths['/cards'].post);
+  assert.ok(openapiDocument.paths['/postings/{id}'].put);
 });
